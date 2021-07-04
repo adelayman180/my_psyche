@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './questions_page.dart';
 import './login_page.dart';
 
@@ -110,12 +111,17 @@ class SignUpPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => QuestionPage(),
-                          ),
-                        ),
+                        onPressed: () async {
+                          SharedPreferences pref =
+                              await SharedPreferences.getInstance();
+                          pref.setBool('firstOpen', false);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => QuestionsPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Sign up',
                           style: TextStyle(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './sign_up_page.dart';
+import './questions_page.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -26,8 +28,7 @@ class LoginPage extends StatelessWidget {
                       'Are you new here ?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 12,
-                        // color: Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -42,6 +43,7 @@ class LoginPage extends StatelessWidget {
                       'Sign Up',
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -89,7 +91,17 @@ class LoginPage extends StatelessWidget {
                       ),
                       SizedBox(height: 40),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          SharedPreferences pref =
+                              await SharedPreferences.getInstance();
+                          pref.setBool('firstOpen', false);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => QuestionsPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Log In',
                           style: TextStyle(
